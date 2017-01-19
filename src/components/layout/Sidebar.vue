@@ -48,13 +48,14 @@ export default {
     },
 
     toggle (item) {
-      item.meta.expanded = !item.meta.expanded
+      this.$store.dispatch('menu/toggle', { path: item.path })
     },
     generatePath (item, subItem) {
       return `${item.component ? item.path + '/' : ''}${subItem.path}`
     }
   },
   mounted () {
+    this.$store.commit('menu/REFRESH')
     /* eslint-disable no-undef */
     componentHandler.upgradeElements(this.$el)
   }

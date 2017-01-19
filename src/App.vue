@@ -3,17 +3,15 @@
     <mprogress/>
     <div v-if="$route.meta.layout === '1-2'">
       <div class="mdl-layout__container">
-        <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header has-drawer is-upgraded">
-          <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header has-drawer is-upgraded">
+          <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
             <top-bar/>
           </header>
-          <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+          <div class="mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <sidebar/>
           </div>
           <main class="mdl-layout__content mdl-color--grey-100">
-            <div class="mdl-grid demo-content">
-              <router-view></router-view>
-            </div>
+            <router-view></router-view>
           </main>
         </div>
       </div>

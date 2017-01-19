@@ -44,8 +44,8 @@ const mutations = {
   [types.AUTHENTICATE_FAILURE] (state, error) {
     state.error = true
     state.inRequest = false
-    if (error.status !== 0 && error.data !== undefined && error.data.message !== undefined) {
-      state.messages = error.data.message
+    if (error.status !== 0 && error.data !== undefined && error.data.error !== undefined && error.data.error.code !== undefined) {
+      state.messages = error.data.error.code
     } else if (error.status === 404) {
       state.messages = 'login.errors.not_found'
     } else {

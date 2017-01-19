@@ -33,7 +33,11 @@ export default {
   name: 'top-bar',
   computed: {
     userNames () {
-      return this.$store.state.auth.payload.user.first_name + ' ' + this.$store.state.auth.payload.user.last_name
+      if (this.$store.state.auth.payload.user !== undefined) {
+        return this.$store.state.auth.payload.user.first_name + ' ' + this.$store.state.auth.payload.user.last_name
+      } else {
+        return ''
+      }
     }
   },
   methods: {

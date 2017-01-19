@@ -16,31 +16,22 @@
           <div class="mdl-cell mdl-cell--1-col mdl-cell--middle center">
             <i class="material-icons">perm_identity</i>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--11-col">
-            <input id="email" type="email" name="email" class="mdl-textfield__input" required v-model="email"/>
-            <label for="email" class="mdl-textfield__label" v-html="$t('login.form.input.label.email')"></label>
-          </div>
+          <mdl-textfield id="email" type="email" :floating-label="$t('login.form.input.label.email')" v-model="email" required class="mdl-cell mdl-cell--10-col"></mdl-textfield>
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--1-col mdl-cell--middle center">
             <i class="material-icons">lock_outline</i>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--11-col">
-            <input id="password" type="password" name="password" class="mdl-textfield__input" required v-model="password"/>
-            <label for="password" class="mdl-textfield__label" v-html="$t('login.form.input.label.password')"></label>
+          <mdl-textfield id="password" type="password" :floating-label="$t('login.form.input.label.password')" v-model="password" class="mdl-cell mdl-cell--10-col"></mdl-textfield>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--12-col">
+            <mdl-checkbox id="remember-me" v-model="remember" class="mdl-js-ripple-effect">{{ $t('login.form.remember') }}</mdl-checkbox>
           </div>
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--12-col">
-            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="remember-me">
-              <input type="checkbox" id="remember-me" class="mdl-checkbox__input">
-              <span class="mdl-checkbox__label" v-html="$t('login.form.remember')"></span>
-            </label>
-          </div>
-        </div>
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--12-col">
-            <button type="submit" class="mdl-cell--12-col mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" v-html="$t('login.form.signin')"></button>
+            <mdl-button type="submit" class="mdl-cell--12-col mdl-js-ripple-effect" accent raised>{{ $t('login.form.signin') }}</mdl-button>
           </div>
         </div>
         <div class="mdl-grid">
@@ -67,7 +58,8 @@
     data: function () {
       return {
         email: '',
-        password: ''
+        password: '',
+        remember: true
       }
     },
     methods: {
@@ -75,10 +67,6 @@
         event.preventDefault()
         this.$store.dispatch('signin', { email: this.email, password: this.password })
       }
-    },
-    mounted () {
-      /* eslint-disable no-undef */
-      componentHandler.upgradeElements(this.$el)
     }
   }
 </script>

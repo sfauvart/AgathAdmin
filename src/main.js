@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import { sync } from 'vuex-router-sync'
 import VueI18n from 'vue-i18n'
+import VueMdl from 'vue-mdl'
 
 import './assets/styles.scss'
 import 'material-design-lite/material.js'
@@ -18,21 +19,14 @@ import progress from './plugins/progress'
 
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+const moment = require('moment')
 require('moment/locale/fr')
-moment.locale('fr')
-require('datatables.net')
-require('imports-loader?define=>false!drmonty-datatables-plugins/dataRender/datetime.js')
-require('imports-loader?define=>false!drmonty-datatables-plugins/sorting/datetime-moment.js')
-import dataTablesFr from 'drmonty-datatables-plugins/i18n/French.json'
-
-$.extend(true, $.fn.dataTable.defaults, {
-  language: dataTablesFr
-})
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.use(VueI18n)
+Vue.use(VueMdl)
 Vue.use(progress)
 
 for (let key in Directives) {
@@ -78,7 +72,7 @@ sync(store, router)
 Object.keys(locales).forEach(function (lang) {
   Vue.locale(lang, locales[lang])
 })
-Vue.config.lang = 'fr'
+Vue.config.lang = navigator.language || navigator.userLanguage
 
 /* eslint-disable no-new */
 new Vue({

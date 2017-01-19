@@ -16,14 +16,11 @@
           <div class="mdl-cell mdl-cell--1-col mdl-cell--middle center">
             <i class="material-icons">perm_identity</i>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--11-col">
-            <input id="email" type="email" name="email" class="mdl-textfield__input" required v-model="email"/>
-            <label for="email" class="mdl-textfield__label" v-html="$t('forgot_password.form.input.label.email')"></label>
-          </div>
+          <mdl-textfield type="email" :floating-label="$t('forgot_password.form.input.label.email')" v-model="email" required class="mdl-cell mdl-cell--10-col"></mdl-textfield>
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--12-col">
-            <button type="submit" class="mdl-cell--12-col mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" v-html="$t('forgot_password.form.submit')"></button>
+            <mdl-button type="submit" class="mdl-cell--12-col mdl-js-ripple-effect" accent raised>{{ $t('forgot_password.form.submit') }}</mdl-button>
           </div>
         </div>
         <div class="mdl-grid">
@@ -57,10 +54,6 @@
         event.preventDefault()
         this.$store.dispatch('forgot', { email: this.email })
       }
-    },
-    mounted () {
-      /* eslint-disable no-undef */
-      componentHandler.upgradeElements(this.$el)
     }
   }
 </script>

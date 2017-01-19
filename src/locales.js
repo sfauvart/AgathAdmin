@@ -1,7 +1,18 @@
 const locales = {
   en: {
     general: {
-      error_api: 'Server connect failed'
+      error_api: 'Server connect failed',
+      button: {
+        delete: 'Delete',
+        edit: 'Edit',
+        save: 'Save',
+        cancel: 'Cancel'
+      }
+    },
+    refresh_token: {
+      errors: {
+        expired: 'Your session is expired. Please re-sign in.'
+      }
     },
     login: {
       title: 'Login to our site',
@@ -51,6 +62,7 @@ const locales = {
     },
     users: {
       grid: {
+        title: 'Users list',
         id: 'Id',
         username: 'Username',
         email: 'Email',
@@ -63,8 +75,13 @@ const locales = {
       },
       button: {
         add: 'Add a new user',
-        delete: 'Delete',
-        edit: 'Edit'
+        delete: 'Delete user(s)',
+        edit: 'Edit user'
+      },
+      info: {
+        user_added: 'User as successfuly added',
+        user_deleted: 'User as successfuly deleted',
+        user_edited: 'User as successfuly modified'
       }
     },
     menu: {
@@ -79,7 +96,18 @@ const locales = {
   },
   fr: {
     general: {
-      error_api: 'Impossible de contacter le serveur'
+      error_api: 'Impossible de contacter le serveur',
+      button: {
+        delete: 'Supprimer',
+        edit: 'Editer',
+        save: 'Sauvegarder',
+        cancel: 'Annuler'
+      }
+    },
+    refresh_token: {
+      errors: {
+        expired: 'Votre session a expiré. Veuillez vous re-connecter.'
+      }
     },
     login: {
       title: 'Connexion',
@@ -129,6 +157,7 @@ const locales = {
     },
     users: {
       grid: {
+        title: 'Liste des utilisateurs',
         id: 'Id',
         username: 'Nom d\'utilisateur',
         email: 'Email',
@@ -141,8 +170,19 @@ const locales = {
       },
       button: {
         add: 'Ajouter un utilisateur',
-        delete: 'Supprimer',
-        edit: 'Editer'
+        delete: 'Supprimer l\'utilisateur',
+        edit: 'Editer l\'utilisateur'
+      },
+      dialog: {
+        delete: {
+          title: 'Supprimer {nb} utilisateur | Supprimer {nb} utilisateurs',
+          confirm: 'Êtes-vous sûr ?'
+        }
+      },
+      info: {
+        user_added: 'Utilisateur ajouté',
+        user_deleted: 'Utilisateur supprimé',
+        user_edited: 'Utilisateur modifié'
       }
     },
     menu: {

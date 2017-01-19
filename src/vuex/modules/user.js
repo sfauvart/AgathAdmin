@@ -12,8 +12,8 @@ const state = {
   user: {
     userId: -1,
     userName: '',
-    first_name: 'Séb',
-    last_name: 'FAUVART'
+    first_name: '',
+    last_name: ''
   }
 }
 

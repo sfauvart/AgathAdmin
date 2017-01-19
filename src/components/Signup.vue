@@ -12,39 +12,30 @@
       </div>
 
       <form class="signup-form" name="signup" v-on:submit="signup" autocomplete="off">
-        <div v-if="error && messages != ''" class="card red lighten-5">
+        <div v-if="$store.state.auth.error && $store.state.auth.messages != ''" class="card red lighten-5">
           <div class="card-content red-text" v-html="$t(messages)"></div>
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--1-col mdl-cell--middle center">
             <i class="material-icons">perm_identity</i>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--11-col">
-            <input id="email" type="email" name="email" class="mdl-textfield__input" required v-model="email"/>
-            <label for="email" class="mdl-textfield__label" v-html="$t('login.form.input.label.email')"></label>
-          </div>
+          <mdl-textfield :floating-label="$t('login.form.input.label.email')" v-model="email" type="email" required class="mdl-cell mdl-cell--10-col"></mdl-textfield>
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--1-col mdl-cell--middle center">
             <i class="material-icons">lock_outline</i>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--11-col">
-            <input :class="{ 'is-valid': this.password_equal, 'is-invalid': !password_equal }" class="mdl-textfield__input" type="password" name="password" required v-model="password"/>
-            <label for="password" class="mdl-textfield__label" v-html="$t('signup.form.input.label.password')"></label>
-          </div>
+          <mdl-textfield type="password" :floating-label="$t('signup.form.input.label.password')" required v-model="password" class="mdl-cell mdl-cell--10-col"></mdl-textfield>
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--1-col mdl-cell--middle center">
             <i class="material-icons">lock_outline</i>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--11-col">
-            <input :class="{ 'is-valid': this.password_equal, 'is-invalid': !password_equal }" class="mdl-textfield__input" type="password" name="password_bis" required v-model="password_bis"/>
-            <label for="password" class="mdl-textfield__label" v-html="$t('signup.form.input.label.password_bis')"></label>
-          </div>
+          <mdl-textfield type="password" :floating-label="$t('signup.form.input.label.password_bis')" required :pattern="this.password" v-model="password_bis" class="mdl-cell mdl-cell--10-col"></mdl-textfield>
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--12-col">
-            <button type="submit" class="mdl-cell--12-col mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" v-html="$t('signup.form.submit')"></button>
+            <mdl-button type="submit" class="mdl-cell--12-col mdl-js-ripple-effect" accent raised>{{ $t('signup.form.submit') }}</mdl-button>
           </div>
         </div>
         <div class="mdl-grid">
@@ -66,36 +57,16 @@
     name: 'Signup',
     data: function () {
       return {
-        password_equal: true,
         email: '',
         password: '',
         password_bis: ''
       }
     },
-    watch: {
-      password: function () {
-        this.checkPassword()
-      },
-      password_bis: function () {
-        this.checkPassword()
-      }
-    },
     methods: {
-      checkPassword: function () {
-        if (this.password_bis === this.password) {
-          this.password_equal = true
-        } else {
-          this.password_equal = false
-        }
-      },
       signup: function (event) {
         event.preventDefault()
         this.$store.dispatch('signup', { email: this.email, password: this.password })
       }
-    },
-    mounted () {
-      /* eslint-disable no-undef */
-      componentHandler.upgradeElements(this.$el)
     }
   }
 </script>

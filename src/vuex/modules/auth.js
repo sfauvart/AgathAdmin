@@ -8,7 +8,8 @@ const state = {
   id_token: null,
   authenticated: false,
   inRequest: null,
-  messages: null,
+  error_messages: '',
+  notif_messages: '',
   error: false,
   payload: {}
 }
@@ -39,20 +40,47 @@ const mutations = {
     state.error = false
     state.id_token = null
     state.payload = {}
+    state.notif_messages = ''
   },
 
   [types.AUTHENTICATE_FAILURE] (state, error) {
     state.error = true
     state.inRequest = false
     if (error.status !== 0 && error.data !== undefined && error.data.error !== undefined && error.data.error.code !== undefined) {
-      state.messages = error.data.error.code
+      state.error_messages = error.data.error.code
     } else if (error.status === 404) {
-      state.messages = 'login.errors.not_found'
+      state.error_messages = 'login.errors.not_found'
     } else {
-      state.messages = 'general.error_api'
+      state.error_messages = 'general.error_api'
     }
 
     router.push({ name: 'login' })
+  },
+
+  [types.FORGOT_PASSWORD] (state, response) {
+    state.inRequest = false
+    state.error = false
+    state.notif_messages = 'login.notifications.reset_password_token_send'
+  },
+  [types.FORGOT_PASSWORD_CONFIRM] (state, response) {
+    state.inRequest = false
+    state.error = false
+    state.notif_messages = 'login.notifications.reset_password_token_confirm'
+    router.push({ name: 'login' })
+  },
+  [types.FORGOT_PASSWORD_REQUEST] (state) {
+    state.inRequest = true
+    state.error = false
+    state.notif_messages = ''
+  },
+  [types.FORGOT_PASSWORD_FAILURE] (state, error) {
+    state.error = true
+    state.inRequest = false
+    if (error.status !== 0 && error.data !== undefined && error.data.error !== undefined && error.data.error.code !== undefined) {
+      state.error_messages = error.data.error.code
+    } else {
+      state.error_messages = 'general.error_api'
+    }
   }
 }
 
@@ -75,18 +103,28 @@ const actions = {
           'auth/check',
       ).then(response => commit(types.AUTHENTICATE, response))
       .catch((error) => commit(types.AUTHENTICATE_FAILURE, error))
-    } else {
-      router.push({ name: 'login' })
     }
   },
-  forgot ({ commit, state }, { email }) {
+  forgot ({ commit, state }, { email, token, password }) {
     commit(types.FORGOT_PASSWORD_REQUEST)
     Vue.http.post(
-      'api/users/forgot_password',
+      'auth/forgot_password',
       {
-        email: email
+        email
       }
     ).then(response => commit(types.FORGOT_PASSWORD, response))
+    .catch((error) => commit(types.FORGOT_PASSWORD_FAILURE, error))
+  },
+  forgot_confirm ({ commit, state }, { email, token, password }) {
+    commit(types.FORGOT_PASSWORD_REQUEST)
+    Vue.http.post(
+      'auth/forgot_password_confirm',
+      {
+        email,
+        token,
+        password
+      }
+    ).then(response => commit(types.FORGOT_PASSWORD_CONFIRM, response))
     .catch((error) => commit(types.FORGOT_PASSWORD_FAILURE, error))
   },
   signup ({ commit, state }, { firstname, lastname, email, password }) {
@@ -108,7 +146,7 @@ const actions = {
     state.payload = {}
     state.authenticated = false
     state.inRequest = null
-    state.messages = null
+    state.error_messages = null
 
     router.push({
       name: 'login'

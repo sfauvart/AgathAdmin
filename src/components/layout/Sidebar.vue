@@ -48,7 +48,7 @@ export default {
     },
 
     toggle (item) {
-      this.$store.dispatch('menu/toggle', { path: item.path })
+      this.$store.commit('menu/EXPAND_TOGGLE', { path: item.path })
     },
     generatePath (item, subItem) {
       return `${item.component ? item.path + '/' : ''}${subItem.path}`

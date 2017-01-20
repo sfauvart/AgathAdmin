@@ -87,7 +87,7 @@
 <script>
 export default {
   name: 'datatables',
-  props: ['title', 'columns', 'rows', 'pagination', 'sort', 'tooltips'],
+  props: ['state-namespace', 'title', 'columns', 'rows', 'pagination', 'sort', 'tooltips'],
   data: function () {
     return {
       selected: [],
@@ -119,47 +119,41 @@ export default {
       return false
     },
     sortBy: function (column) {
-      if (column.data === this.sort.property) {
-        this.sort.ascending = !this.sort.ascending
-      } else {
-        this.sort.property = column.data
-        this.sort.ascending = true
-      }
-      this.$emit('pagination-change')
+      this.$store.commit(this.stateNamespace + 'SORT_CHANGE', { column })
+      this.$store.dispatch(this.stateNamespace + 'load')
     },
     addButton: function () {
       this.$emit('add-click')
     },
-    deleteButton: function () {
+    rowsChecked: function () {
       let rowsChecked = []
       let vm = this
       this.selected.forEach(function (index) {
         rowsChecked.push(vm.rows[index])
       })
-      this.$emit('delete-click', rowsChecked)
+      this.$store.commit(this.stateNamespace + 'GRID_ROWS_CHECKED', { rowsChecked })
+    },
+    deleteButton: function () {
+      this.$emit('delete-click')
     },
     editButton: function (row) {
       this.$emit('edit-click', row)
     },
     pageChange: function (page) {
-      this.pagination.currentPage = page
-      this.$emit('pagination-change')
+      this.$store.commit(this.stateNamespace + 'PAGE_CHANGE', { page })
+      this.$store.dispatch(this.stateNamespace + 'load')
     },
     nbElemChange: function (numberOfElements) {
-      this.pagination.numberOfElements = numberOfElements
-      this.$emit('pagination-change')
+      this.$store.commit(this.stateNamespace + 'ROWS_CHANGE', { numberOfElements })
+      this.$store.dispatch(this.stateNamespace + 'load')
     },
     navBefore: function () {
-      if (this.pagination.currentPage > 1) {
-        this.pagination.currentPage = this.pagination.currentPage - 1
-        this.$emit('pagination-change')
-      }
+      this.$store.commit(this.stateNamespace + 'PAGE_BEFORE')
+      this.$store.dispatch(this.stateNamespace + 'load')
     },
     navNext: function () {
-      if (this.pagination.currentPage < this.pagination.totalPages) {
-        this.pagination.currentPage = this.pagination.currentPage + 1
-        this.$emit('pagination-change')
-      }
+      this.$store.commit(this.stateNamespace + 'PAGE_NEXT')
+      this.$store.dispatch(this.stateNamespace + 'load')
     },
     headerCheckHandler: function (event) {
       let boxes = this.$el.querySelectorAll('tbody .mdl-data-table__select [id^="row"]')
@@ -176,6 +170,7 @@ export default {
         })
       }
       this.selected = arrIndex
+      this.rowsChecked()
     },
     rowCheckHandler: function (event) {
       let inputBoxes = this.$el.querySelectorAll('tbody .mdl-data-table__select [id^="row"]')
@@ -197,9 +192,24 @@ export default {
         headerBox.MaterialCheckbox.uncheck()
       }
       this.selected = arrIndex
+      this.rowsChecked()
+    },
+    rowUncheck: function () {
+      let inputBoxes = this.$el.querySelectorAll('tbody .mdl-data-table__select [id^="row"]')
+      inputBoxes.forEach(function (box) {
+        if (box.checked) {
+          box.parentNode.MaterialCheckbox.uncheck()
+        }
+      })
+      let headerBox = this.$el.querySelector('thead .mdl-data-table__select')
+      headerBox.MaterialCheckbox.uncheck()
+
+      this.selected = []
+      this.rowsChecked()
     }
   },
   mounted () {
+    this.$store.dispatch(this.stateNamespace + 'load')
   },
   updated () {
     /* eslint-disable no-undef */

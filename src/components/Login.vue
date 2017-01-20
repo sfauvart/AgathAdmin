@@ -7,8 +7,11 @@
           <div class="mdl-card__subtitle-text mdl-color-text--grey-300" v-html="$t('login.help')"></div>
         </span>
 			</div>
-      <div v-if="$store.state.auth.error && $store.state.auth.messages != ''" class="mdl-card__title mdl-color--grey-200 mdl-color-text--red-400">
-        <b v-html="$t($store.state.auth.messages)"></b>
+      <div v-if="$store.state.auth.error && $store.state.auth.error_messages != ''" class="mdl-card__title mdl-color--grey-200 mdl-color-text--red-400">
+        <b v-html="$t($store.state.auth.error_messages)"></b>
+      </div>
+      <div v-if="$store.state.auth.notif_messages != ''" class="mdl-card__title mdl-color--grey-200">
+        <b v-html="$t($store.state.auth.notif_messages)"></b>
       </div>
 
       <form class="login-form" name="login" v-on:submit="login" autocomplete="on">

@@ -21,7 +21,7 @@ const locales = {
       forgot_password: 'Forgot password',
       form: {
         signin: 'Sign in!',
-        remember: 'Rememeber me',
+        remember: 'Remember me',
         input: {
           label: {
             email: 'Email',
@@ -31,6 +31,10 @@ const locales = {
       },
       errors: {
         not_found: 'Incorrect email or password'
+      },
+      notifications: {
+        reset_password_token_send: 'An email has sent to the email address with a token verification.',
+        reset_password_token_confirm: 'Your password was successfuly changed. Please sign in to confirm.'
       }
     },
     signup: {
@@ -126,6 +130,10 @@ const locales = {
       },
       errors: {
         not_found: 'Email ou mot de passe incorrect'
+      },
+      notifications: {
+        reset_password_token_send: 'Un email a été envoyé avec un code de vérification.',
+        reset_password_token_confirm: 'Votre mot de passe a été changé. Veuillez vous connecter pour confirmer.'
       }
     },
     signup: {
@@ -181,7 +189,7 @@ const locales = {
       },
       info: {
         user_added: 'Utilisateur ajouté',
-        user_deleted: 'Utilisateur supprimé',
+        user_deleted: 'Utilisateur supprimé | Utilisateurs supprimés',
         user_edited: 'Utilisateur modifié'
       }
     },

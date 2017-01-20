@@ -26,9 +26,9 @@ const mutations = {
       }
     })
   },
-  [MENU_EXPAND_TOGGLE] (state, path) {
+  [MENU_EXPAND_TOGGLE] (state, payload) {
     state.sidemenu.forEach(function (item) {
-      if (item.path === path) {
+      if (item.path === payload.path) {
         item.meta.expanded = !item.meta.expanded
         return
       }
@@ -42,12 +42,6 @@ const state = {
 }
 
 const actions = {
-  'menu/toggle' ({ commit, state }, { path }) {
-    commit(MENU_EXPAND_TOGGLE, path)
-  },
-  'menu/refresh' ({ commit, state }, { path }) {
-    commit(MENU_EXPAND_TOGGLE, path)
-  }
 }
 
 export default {
